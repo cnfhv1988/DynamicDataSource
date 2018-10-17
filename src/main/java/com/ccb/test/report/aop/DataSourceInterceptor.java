@@ -1,5 +1,7 @@
 package com.ccb.test.report.aop;
 
+import com.ccb.test.report.configuration.MultiDataSource;
+import com.ccb.test.report.vo.RequestVo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,10 +23,10 @@ public class DataSourceInterceptor {
     @Around("doAspect()")
     public Object selectDataSource(ProceedingJoinPoint pj) throws Throwable{
         Object[] args = pj.getArgs();
-        String env = args[0].toString();
-        System.out.println(env);
-        logger.info("Switcht dataSource to " + env);
-        //MultiDataSource.setDataSourceKey(env);
+        RequestVo requestVo = (RequestVo)args[0];
+        System.out.println(requestVo.getEnv());
+        logger.info("Switcht dataSource to " + requestVo.getEnv());
+        MultiDataSource.setDataSourceKey(requestVo.getEnv());
         Object object = pj.proceed();
         return object;
     }

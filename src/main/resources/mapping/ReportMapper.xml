@@ -10,11 +10,11 @@
 
     <select id="getReport" resultMap="BaseResultMap">
         SELECT
-          bizCode, returnCode, "status" as status, 1 as total FROM t_p_bizreturn_1d
+          bizCode, returnCode, if(returnCode='000000000000',"SUCCESS","FAIL") as status, sum(GROUP_COUNT) as total FROM t_p_bizreturn_1d
         WHERE
-          time_tag &lt;= #{startDate, jdbcType=VARCHAR}
+          time_tag &gt;= #{startDate, jdbcType=VARCHAR}
         AND
-          time_tag &gt;= #{endDate, jdbcType=VARCHAR}
+          time_tag &lt; #{endDate, jdbcType=VARCHAR}
         AND
           bizCode = #{bizCode, jdbcType=VARCHAR}
         GROUP BY bizCode, returnCode

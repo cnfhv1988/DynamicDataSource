@@ -1,10 +1,11 @@
 package com.ccb.test.report.configuration;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class DataSourceConfigurer {
     }
 
     @Bean("vt")
+    @Primary
     @ConfigurationProperties(prefix = "spring.datasource.vt")
     public DataSource vt() {
         return DataSourceBuilder.create().build();
@@ -42,10 +44,12 @@ public class DataSourceConfigurer {
     public DataSource selectedDataSource(){
         MultiDataSource multiDataSource = new MultiDataSource();
         Map<Object, Object> datasourceMap = new HashMap<>(4);
+        //DataSource master = vt();
         datasourceMap.put("pl2", pl2());
         datasourceMap.put("pl3", pl3());
         datasourceMap.put("pl4", pl4());
         datasourceMap.put("vt", vt());
+        //multiDataSource.setDefaultTargetDataSource(master);
         multiDataSource.setTargetDataSources(datasourceMap);
         return multiDataSource;
     }

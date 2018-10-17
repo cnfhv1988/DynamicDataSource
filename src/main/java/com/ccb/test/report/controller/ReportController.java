@@ -1,16 +1,17 @@
 package com.ccb.test.report.controller;
 
 import com.ccb.test.report.service.ReportService;
+import com.ccb.test.report.utils.CommonResponse;
+import com.ccb.test.report.utils.ResponseUtil;
 import com.ccb.test.report.vo.ReportVo;
+import com.ccb.test.report.vo.RequestVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class ReportController {
     private ReportService reportService;
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity report(String env, String startDate, String endDate, String bizCode) {
-        logger.info("Start get report from " + env);
-        List<ReportVo> reports = reportService.getReport(startDate, endDate, bizCode);
-        return new ResponseEntity<>(reports, HttpStatus.OK);
+    public CommonResponse report(@RequestBody RequestVo requestVo) {
+        logger.info("Start get report from " + requestVo.getEnv());
+        List<ReportVo> reports = reportService.getReport(requestVo.getStartDate(), requestVo.getEndDate(), requestVo.getBizCode());
+        return ResponseUtil.generateResponse(200,"Success",reports);
     }
 }
