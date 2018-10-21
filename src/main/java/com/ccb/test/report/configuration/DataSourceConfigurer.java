@@ -44,12 +44,10 @@ public class DataSourceConfigurer {
     public DataSource selectedDataSource(){
         MultiDataSource multiDataSource = new MultiDataSource();
         Map<Object, Object> datasourceMap = new HashMap<>(4);
-        //DataSource master = vt();
         datasourceMap.put("pl2", pl2());
         datasourceMap.put("pl3", pl3());
         datasourceMap.put("pl4", pl4());
         datasourceMap.put("vt", vt());
-        //multiDataSource.setDefaultTargetDataSource(master);
         multiDataSource.setTargetDataSources(datasourceMap);
         return multiDataSource;
     }

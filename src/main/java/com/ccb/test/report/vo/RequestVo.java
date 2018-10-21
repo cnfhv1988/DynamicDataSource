@@ -1,11 +1,13 @@
 package com.ccb.test.report.vo;
 
+import java.util.List;
+
 public class RequestVo {
 
     private String env;
     private String startDate;
     private String endDate;
-    private String bizCode;
+    private List<RequestBizCodeVo> transCodes;
 
     public String getEnv() {
         return env;
@@ -31,11 +33,11 @@ public class RequestVo {
         this.endDate = endDate;
     }
 
-    public String getBizCode() {
-        return bizCode;
+    public List<RequestBizCodeVo> getTransCodes() {
+        return transCodes;
     }
 
-    public void setBizCode(String bizCode) {
-        this.bizCode = bizCode;
+    public void setTransCodes(List<RequestBizCodeVo> transCodes) {
+        this.transCodes = transCodes;
     }
 }

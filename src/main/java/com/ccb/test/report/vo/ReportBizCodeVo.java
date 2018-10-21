@@ -1,6 +1,6 @@
 package com.ccb.test.report.vo;
 
-public class ReportVo {
+public class ReportBizCodeVo {
 
     private String bizCode;
     private String returnCode;
